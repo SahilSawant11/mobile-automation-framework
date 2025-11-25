@@ -1,0 +1,11 @@
+
+/target/
+/logs/
+/allure-results/
+/test-output/
+/screenshots/
+/.idea/
+/*.iml
+.DS_Store
+*.apk
+.env

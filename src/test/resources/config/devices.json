@@ -1,0 +1,9 @@
+{
+  "devices": [
+    {
+      "name": "Android_Emulator",
+      "udid": "emulator-5554",
+      "platformVersion": "13"
+    }
+  ]
+}

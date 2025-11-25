@@ -1,0 +1,25 @@
+name: Publish Allure to GitHub Pages
+on:
+  workflow_run:
+    workflows: ["CI/CD"]
+    types: [completed]
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download allure artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+      - name: Generate Allure Report
+        run: |
+          sudo apt-get update && sudo apt-get install -y default-jre
+          curl -sL https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.22.1/allure-commandline-2.22.1-linux.zip -o allure.zip
+          unzip -qq allure.zip -d /tmp/allure
+          /tmp/allure/allure-2.22.1/bin/allure generate allure-results -o public || true
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          publish_dir: ./public

@@ -1,0 +1,7 @@
+name: Nightly
+on:
+  schedule:
+    - cron: '0 2 * * *'
+jobs:
+  run-nightly:
+    runs-on: ubuntu-latest
