@@ -17,24 +17,38 @@ public class LoginPage extends BasePage {
     @FindBy(xpath = "//android.view.View[@content-desc='sahil sawant स्वागत आहे']") private WebElement userNameWelcome;
 
     public void tapAllow() {
-        allowBtn.click();
+        try {
+            allowBtn.click();
+        } catch (Exception e) {
+//            throw new RuntimeException(e);
+        }
     }
 
     public void tapSkip() {
-        skipButton.click();
+        try {
+            skipButton.click();
+        } catch (Exception e) {
+//            throw new RuntimeException(e);
+        }
     }
 
     public void tapGetStarted() {
-        getStartedButton.click();
+        try {
+            getStartedButton.click();
+        } catch (Exception e) {
+//            throw new RuntimeException(e);
+        }
     }
 
-        public LoginPage enterMobileno(String mobileno) {
+        public LoginPage enterMobileno(String mobileno) throws InterruptedException {
+        wait(1000);
         mobilenoField.clear();
         mobilenoField.sendKeys(mobileno);
         return this;
     }
 
-    public LoginPage enterPassword(String password) {
+    public LoginPage enterPassword(String password) throws InterruptedException {
+        wait(1000);
         passwordField.clear();
         passwordField.sendKeys(password);
         return this;
@@ -45,7 +59,11 @@ public class LoginPage extends BasePage {
     }
 
     public void tapForegroundOnly() {
-        foregroundOnlyButton.click();
+        try {
+            foregroundOnlyButton.click();
+        } catch (Exception e) {
+//            throw new RuntimeException(e);
+        }
     }
 
     public boolean isLoginButtonEnabled() {

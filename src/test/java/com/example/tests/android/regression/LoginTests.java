@@ -11,10 +11,11 @@ public class LoginTests extends BaseTest {
 
     @Test
     @Description("Verify login flow")
-    public void testLogin() {
+    public void testLogin() throws InterruptedException {
         LoginPage login = new LoginPage();
         login.tapAllow();
         login.tapSkip();
+        login.tapGetStarted();
         login.enterMobileno("8104155804").enterPassword("112112").tapLogin();
         login.tapForegroundOnly();
         HomePage home = new HomePage();

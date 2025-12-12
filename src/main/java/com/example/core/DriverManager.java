@@ -2,11 +2,9 @@ package com.example.core;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import io.appium.java_client.android.options.UiAutomator2Options;
 
 import java.net.URL;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class DriverManager {
     // Thread-safe driver map to support parallel execution
@@ -23,13 +21,17 @@ public class DriverManager {
     public static void quitDriver() {
         AppiumDriver d = driver.get();
         if (d != null) {
-            try { d.quit(); } catch (Exception ignored) {}
+            try {
+                d.quit();
+            } catch (Exception ignored) {
+                // Ignore quit exceptions
+            }
             driver.remove();
         }
     }
 
-    public static AppiumDriver createAndroidDriver(String remoteUrl, DesiredCapabilities caps) throws Exception {
-        AndroidDriver androidDriver = new AndroidDriver(new URL(remoteUrl), caps);
+    public static AppiumDriver createAndroidDriver(String remoteUrl, UiAutomator2Options options) throws Exception {
+        AndroidDriver androidDriver = new AndroidDriver(new URL(remoteUrl), options);
         setDriver(androidDriver);
         return androidDriver;
     }
