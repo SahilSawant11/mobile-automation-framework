@@ -18,6 +18,6 @@ public class BaseTest {
 
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
-        DriverManager.quitDriver();
+//        DriverManager.quitDriver();
     }
 }

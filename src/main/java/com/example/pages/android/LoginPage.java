@@ -7,18 +7,30 @@ import org.openqa.selenium.support.FindBy;
 
 public class LoginPage extends BasePage {
 
-    @FindBy(id = "com.example.app:id/username")
-    private WebElement usernameField;
+    @FindBy(xpath = "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.EditText[1]") private WebElement mobilenoField;
+    @FindBy(xpath = "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.EditText[2]") private WebElement passwordField;
+    @FindBy(xpath = "//android.widget.Button[@content-desc='साइन इन']") private WebElement loginButton;
+    @FindBy(xpath = "com.android.permissioncontroller:id/permission_allow_button") private WebElement allowBtn;
+    @FindBy(xpath = "//android.view.View[@content-desc='SKIP']") private WebElement skipButton;
+    @FindBy(xpath = "//android.view.View[@content-desc='Get Started']") private WebElement getStartedButton;
+    @FindBy(xpath = "//android.widget.Button[@resource-id='com.android.permissioncontroller:id/permission_allow_foreground_only_button']") private WebElement foregroundOnlyButton;
+    @FindBy(xpath = "//android.view.View[@content-desc='sahil sawant स्वागत आहे']") private WebElement userNameWelcome;
 
-    @FindBy(id = "com.example.app:id/password")
-    private WebElement passwordField;
+    public void tapAllow() {
+        allowBtn.click();
+    }
 
-    @FindBy(id = "com.example.app:id/login")
-    private WebElement loginButton;
+    public void tapSkip() {
+        skipButton.click();
+    }
 
-    public LoginPage enterUsername(String username) {
-        usernameField.clear();
-        usernameField.sendKeys(username);
+    public void tapGetStarted() {
+        getStartedButton.click();
+    }
+
+        public LoginPage enterMobileno(String mobileno) {
+        mobilenoField.clear();
+        mobilenoField.sendKeys(mobileno);
         return this;
     }
 
@@ -32,9 +44,8 @@ public class LoginPage extends BasePage {
         loginButton.click();
     }
 
-
-    public boolean isUsernameFieldDisplayed() {
-        return usernameField.isDisplayed();
+    public void tapForegroundOnly() {
+        foregroundOnlyButton.click();
     }
 
     public boolean isLoginButtonEnabled() {
@@ -42,6 +53,6 @@ public class LoginPage extends BasePage {
     }
 
     public String getUsernameText() {
-        return usernameField.getText();
+        return mobilenoField.getText();
     }
 }

@@ -9,12 +9,15 @@ import org.testng.annotations.Test;
 
 public class LoginTests extends BaseTest {
 
-    @Test(retryAnalyzer = com.example.core.TestRetry.class)
+    @Test
     @Description("Verify login flow")
     public void testLogin() {
         LoginPage login = new LoginPage();
-        login.enterUsername("testuser").enterPassword("Password123").tapLogin();
+        login.tapAllow();
+        login.tapSkip();
+        login.enterMobileno("8104155804").enterPassword("112112").tapLogin();
+        login.tapForegroundOnly();
         HomePage home = new HomePage();
-        Assert.assertTrue(home.getWelcomeText().length() > 0, "Welcome text must be present");
+        Assert.assertFalse(home.getWelcomeText().isEmpty(), "Welcome text must be present");
     }
 }
