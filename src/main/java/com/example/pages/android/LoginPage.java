@@ -1,76 +1,62 @@
 package com.example.pages.android;
 
 import com.example.core.BasePage;
-import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
+import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 public class LoginPage extends BasePage {
 
-    @FindBy(xpath = "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.EditText[1]") private WebElement mobilenoField;
-    @FindBy(xpath = "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.EditText[2]") private WebElement passwordField;
+    @FindBy(xpath = "//android.widget.EditText[@hint='मोबाईल नंबर']") private WebElement mobilenoField;
+    @FindBy(xpath = "//android.widget.EditText[@hint='पासवर्ड']") private WebElement passwordField;
     @FindBy(xpath = "//android.widget.Button[@content-desc='साइन इन']") private WebElement loginButton;
-    @FindBy(xpath = "com.android.permissioncontroller:id/permission_allow_button") private WebElement allowBtn;
-    @FindBy(xpath = "//android.view.View[@content-desc='SKIP']") private WebElement skipButton;
-    @FindBy(xpath = "//android.view.View[@content-desc='Get Started']") private WebElement getStartedButton;
-    @FindBy(xpath = "//android.widget.Button[@resource-id='com.android.permissioncontroller:id/permission_allow_foreground_only_button']") private WebElement foregroundOnlyButton;
     @FindBy(xpath = "//android.view.View[@content-desc='sahil sawant स्वागत आहे']") private WebElement userNameWelcome;
 
-    public void tapAllow() {
-        try {
-            allowBtn.click();
-        } catch (Exception e) {
-//            throw new RuntimeException(e);
-        }
+    public void enterMobileno(String mobileno) {
+        log.info("Entering mobile number");
+        enterText(mobilenoField, mobileno);
     }
 
-    public void tapSkip() {
-        try {
-            skipButton.click();
-        } catch (Exception e) {
-//            throw new RuntimeException(e);
-        }
-    }
-
-    public void tapGetStarted() {
-        try {
-            getStartedButton.click();
-        } catch (Exception e) {
-//            throw new RuntimeException(e);
-        }
-    }
-
-        public LoginPage enterMobileno(String mobileno) throws InterruptedException {
-        wait(1000);
-        mobilenoField.clear();
-        mobilenoField.sendKeys(mobileno);
-        return this;
-    }
-
-    public LoginPage enterPassword(String password) throws InterruptedException {
-        wait(1000);
-        passwordField.clear();
-        passwordField.sendKeys(password);
-        return this;
+    public void enterPassword(String password) {
+        log.info("Entering password");
+        enterText(passwordField, password);
     }
 
     public void tapLogin() {
-        loginButton.click();
+        log.info("Tapping Login button");
+        safeClick(loginButton, 10);
     }
 
-    public void tapForegroundOnly() {
+    public boolean performLogin(String mobileno, String password) {
+        log.info("Performing complete login flow for mobile: {}", mobileno);
         try {
-            foregroundOnlyButton.click();
+            // Enter credentials
+            pause(5000);
+            enterMobileno(mobileno);
+            pause(5000);
+            enterPassword(password);
+            tapLogin();
+            log.info("Login flow completed successfully");
+            return true;
         } catch (Exception e) {
-//            throw new RuntimeException(e);
+            log.error("Login failed with exception: {}", e.getMessage());
+            e.printStackTrace();
+            return false;
         }
     }
 
-    public boolean isLoginButtonEnabled() {
-        return loginButton.isEnabled();
+    public void setText(WebElement element, String text) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("elementId", ((RemoteWebElement) element).getId());
+        params.put("text", text);
+
+        driver.executeScript("mobile: setText", params);
     }
 
-    public String getUsernameText() {
-        return mobilenoField.getText();
-    }
 }
